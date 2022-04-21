@@ -151,10 +151,10 @@
 					</div>
 
 
-					<div class="mb-3">
+					<div class="mb-3">  
 						<label for="description">내용:</label> <span class=""
 							id="description">${product.description}</span>
-					</div>
+					</div>   
 
 					<div>
 						<label>갯수</label> <select id="number" class="num">

@@ -451,7 +451,7 @@ public class LoginSVC {
 		ProductVO product = new ProductVO();
 		int size = list.size();
 		for (int i = 0; i < size; i++) {
-			Map<String, Object> map = list.get(i);
+			Map<String, Object> map = list.get(i);   
 			if (i == 0) {
 				product.setNum_pr((int) map.get("num_pr"));
 				product.setName((String) map.get("name"));
