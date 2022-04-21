@@ -43,7 +43,7 @@ import com.pj.vo.ProductVO;
 @Controller
 @RequestMapping("/bar")
 @SessionAttributes("id")
-public class LoginController {
+public class LoginController {   
 
 	@Autowired
 	private LoginSVC svc;

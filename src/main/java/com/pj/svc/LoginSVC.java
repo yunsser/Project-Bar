@@ -474,7 +474,7 @@ public class LoginSVC {
 
 	// 글업데이트
 		public boolean shopUpdated(ProductVO product) {
-			return dao.shopUpdated(product);
+			return dao.shopUpdated(product);   
 		}
 	
 	public boolean shopUpdated(HttpServletRequest request, ProductVO product, MultipartFile[] mfiles,
