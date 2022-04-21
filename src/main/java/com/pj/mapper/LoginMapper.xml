@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pj.mapper.LoginMapper">
+
+
+	<!-- 로그인 -->
+	<select id="login" resultType="String"
+		parameterType="com.pj.vo.LoginVO">
+		SELECT id FROM user WHERE id=#{id} AND pw=#{pw}
+	</select>
+
+	<!-- 중복확인 -->
+	<select id="checkId" resultType="com.pj.vo.LoginVO"
+		parameterType="String">
+		SELECT num, id, pw ,name, yy, mm, dd, gender, email,
+		phone FROM user WHERE id=#{id}
+	</select>
+
+	<!-- 회원가입 -->
+	<insert id="addMember" parameterType="com.pj.vo.LoginVO">
+		INSERT INTO user
+		VALUES(NULL,#{id},#{pw},#{name},#{yy},#{mm},#{dd},#{gender},#{phone},#{email})
+	</insert>
+
+	<!-- 상세보기 -->
+	<select id="selectById" resultType="com.pj.vo.LoginVO"
+		parameterType="String">
+		SELECT num, id, pw ,name, yy, mm, dd, gender, phone,
+		email FROM user WHERE id = #{id}
+	</select>
+
+	<!-- 업데이트 -->
+	<update id="updateByMap" parameterType="map">
+		UPDATE user SET pw=#{pw},
+		phone=#{phone}, email=#{email} WHERE id=#{id}
+	</update>
+
+	<!-- 삭제기능 -->
+	<delete id="deleteMem" parameterType="String">
+		DELETE FROM user WHERE
+		id=#{id}
+	</delete>
+
+	<!-- 목록 사용안하는중 -->
+	<select id="getList" resultType="com.pj.vo.LoginVO">
+		SELECT num, id, pw ,name, yy,
+		mm, dd, gender, phone, email FROM user
+	</select>
+
+	<!-- ==================================================================================================== -->
+
+	<!-- 리스트 -->
+	<select id="getMemMap" resultType="map">
+		SELECT num, author, title,
+		contents, date FROM board
+	</select>
+
+	<!--글작성 -->
+	<insert id="addBoard" parameterType="com.pj.vo.BoardVO"
+		useGeneratedKeys="true" keyProperty="num">
+		INSERT INTO board
+		VALUES(null,#{author}, #{title}, #{contents}, NOW())
+	</insert>
+
+	<!-- 파일업로드 -->
+	<insert id="addFileInfo" parameterType="com.pj.vo.AttachVO">
+		INSERT INTO attach
+		VALUES(null, #{board_num}, #{filename}, #{filesize})
+	</insert>
+
+	<!-- 파일 불러오기 -->
+	<select id="getFilename" parameterType="Integer"
+		resultType="String">
+		SELECT filename FROM attach WHERE att_num=#{att_num}
+	</select>
+
+	<!-- <select id="getUserList" resultType="com.pj.vo.BoardVO"> SELECT num, 
+		author, title, contents, date FROM board </select> -->
+
+	<!-- 게시글 파일불러오기 -->
+	<select id="detailNum" resultType="map" parameterType="Integer">
+		SELECT *
+		FROM board b
+		LEFT OUTER JOIN attach a
+		ON b.num=a.board_num
+		WHERE b.num
+		=
+		#{num};
+	</select>
+
+	<!-- 수정하기 <select id="getUserByNum" resultType="com.pj.vo.BoardVO" parameterType="Integer"> 
+		SELECT * FROM board WHERE num = #{num} #{uid} = ? </select> -->
+
+	<!-- 수정하기 -->
+	<update id="boardUpdate" parameterType="com.pj.vo.BoardVO">
+		UPDATE board SET title=#{title},
+		contents=#{contents}
+		WHERE num=#{num}
+	</update>
+
+	<!-- 파일삭제 -->
+	<delete id="deleteFileInfo" parameterType="Integer">
+		DELETE FROM attach WHERE att_num=#{num}
+	</delete>
+
+	<!-- 글삭제 -->
+	<delete id="boardDeleted" parameterType="Integer">
+		DELETE FROM board WHERE num=#{num}
+	</delete>
+
+
+	<!-- ==================================================================================================== -->
+
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countBoard" resultType="int">
+		SELECT COUNT(*) FROM board
+	</select>
+
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectBoard" resultType="com.pj.vo.BoardVO">
+
+		SELECT *
+		FROM (
+		SELECT
+		@rownum:=@rownum+1 rn, A.*
+		FROM (
+		SELECT *
+		FROM board,
+		(SELECT @ROWNUM:=0)
+		t
+		ORDER BY num DESC
+		) A
+		) B
+
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- ==================================================================================================== -->
+
+	<!-- 마스터 리스트 -->
+	<select id="masterList" resultType="com.pj.vo.LoginVO">
+		SELECT num, id, name, yy,mm,
+		dd, gender, phone, email FROM user
+	</select>
+
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countMaster" resultType="int">
+		SELECT COUNT(*) FROM user
+	</select>
+
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectMaster" resultType="com.pj.vo.LoginVO">
+
+		SELECT *
+		FROM (
+		SELECT
+		@rownum:=@rownum+1 rn, A.*
+		FROM (
+		SELECT *
+		FROM user,
+		(SELECT @ROWNUM:=0)
+		t
+		ORDER BY num DESC
+		) A
+		) B
+
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+
+	<!-- 마스터 삭제기능 -->
+	<delete id="userDelete" parameterType="Integer">
+		DELETE FROM user WHERE
+		num=#{num}
+	</delete>
+
+
+	<!-- ======================================================================================================== -->
+
+	
+	<select id="commentCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM comment
+	</select>
+
+	<select id="commentList" resultType="com.pj.vo.CommentVO">
+		SELECT
+		*
+		FROM comment
+	</select>
+
+	<insert id="commentInsert" parameterType="com.pj.vo.CommentVO">
+		INSERT INTO
+		comment (CNO, BNO, CONTENT, WRITER, REG_DATE)
+		VALUES(#{cno},#{bno},#{content},#{writer},now())
+	</insert>
+
+	<update id="commentUpdate" parameterType="com.pj.vo.CommentVO">
+		UPDATE comment
+		SET
+		CONTENT = #{content}
+		WHERE CNO = #{cno}
+	</update>
+
+	<delete id="commentDelete" parameterType="int">
+		DELETE FROM comment WHERE CNO = #{cno}
+	</delete>
+
+	<!-- ======================================================================================================== -->
+
+	<!-- 공지 총 게시글 갯수 출력 -->
+	<select id="countNotice" resultType="int">
+		SELECT COUNT(*) FROM notice
+	</select>
+
+	<!-- 공지 페이징 처리 후 게시글 조회 -->
+	<select id="selectNotice" resultType="com.pj.vo.NoticeVO">
+
+		SELECT *
+		FROM (
+		SELECT
+		@rownum:=@rownum+1 rn, A.*
+		FROM (
+		SELECT *
+		FROM notice,
+		(SELECT @ROWNUM:=0)
+		t
+		ORDER BY num_no DESC
+		) A
+		) B
+
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="getNotice" resultType="map">
+		SELECT num_no, master, title_no,
+		content_no, ndate FROM notice
+	</select>
+
+	<!--글작성 -->
+	<insert id="noticeBoard" parameterType="com.pj.vo.NoticeVO"
+		useGeneratedKeys="true" keyProperty="num_no">
+		INSERT INTO notice
+		VALUES(null,#{master}, #{title_no}, #{content_no}, NOW())
+	</insert>
+
+	<!-- 파일업로드 -->
+	<insert id="noticeFileInfo" parameterType="com.pj.vo.Notice_attachVO">
+		INSERT INTO notice_attach
+		VALUES(null, #{notice_num}, #{no_filename}, #{no_filesize})
+	</insert>
+
+	<!-- 파일 불러오기 -->
+	<select id="getNoriceFilename" parameterType="Integer"
+		resultType="String">
+		SELECT no_filename FROM notice_attach WHERE no_att_num=#{no_att_num}
+	</select>
+	
+	<!-- 게시글 불러오기 -->
+	<select id="noticedetailNum" resultType="map" parameterType="Integer">
+		SELECT *
+		FROM notice b
+		LEFT OUTER JOIN notice_attach a
+		ON b.num_no=a.notice_num
+		WHERE b.num_no=#{num_no};
+	</select>
+
+	<!-- 수정하기 -->
+	<update id="noticeUpdated" parameterType="com.pj.vo.NoticeVO">
+		UPDATE notice SET title_no=#{title_no},
+		content_no=#{content_no}
+		WHERE num_no=#{num_no}
+	</update>
+
+	<!-- 파일삭제 -->
+	<delete id="noticedeleteFileInfo" parameterType="Integer">
+		DELETE FROM notice_attach WHERE no_att_num=#{num}
+	</delete>
+
+	<!-- 글삭제 -->
+	<delete id="noticeDeleted" parameterType="Integer">
+		DELETE FROM notice WHERE num_no=#{num}
+	</delete>
+	
+	<!-- ======================================================================================================== -->
+	
+	<!-- 공지 총 게시글 갯수 출력 -->
+	<select id="countShop" resultType="int">
+		SELECT COUNT(*) FROM product
+	</select>
+
+	<!-- 공지 페이징 처리 후 게시글 조회 -->
+	<select id="selectShop" resultType="com.pj.vo.ProductVO">
+
+		SELECT *
+		FROM (
+		SELECT
+		@rownum:=@rownum+1 rn, A.*
+		FROM (
+		SELECT *
+		FROM product,
+		(SELECT @ROWNUM:=0)
+		t
+		ORDER BY num_pr DESC
+		) A
+		) B
+
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="getShop" resultType="map">
+		SELECT num_pr, name, price,
+		description, date_da FROM product
+	</select>
+	
+	<select id="getImg" resultType="map">
+		SELECT * FROM img
+	</select>
+
+	<!--글작성 -->
+	<insert id="shopBoard" parameterType="com.pj.vo.ProductVO"
+		useGeneratedKeys="true" keyProperty="num_pr">
+		INSERT INTO product
+		VALUES(null,#{name}, #{price}, #{description}, NOW())
+	</insert>
+
+	<!-- 파일업로드 -->
+	<insert id="shopFileInfo" parameterType="com.pj.vo.ImgVO">
+		INSERT INTO img
+		VALUES(null, #{prd_num}, #{imgname}, #{imgsize})
+	</insert>
+
+	<!-- 파일 불러오기 -->
+	<select id="getShopFilename" parameterType="Integer"
+		resultType="String">
+		SELECT imgname FROM Img WHERE img_num=#{img_num}
+	</select>
+	
+	<!-- 게시글 불러오기 -->
+	<select id="shopdetailNum" resultType="map" parameterType="Integer">
+		SELECT *
+		FROM product b
+		LEFT OUTER JOIN img a
+		ON b.num_pr=a.prd_num
+		WHERE b.num_pr=#{num_pr};
+	</select>
+
+	<!-- 수정하기 -->
+	<update id="shopUpdated" parameterType="com.pj.vo.ProductVO">
+		UPDATE product SET name=#{name},
+		price=#{price}, description=#{description}
+		WHERE num_pr=#{num_pr}
+	</update>
+
+	<!-- 파일삭제 -->
+	<delete id="shopdeleteFileInfo" parameterType="Integer">
+		DELETE FROM img WHERE img_num=#{num}
+	</delete>
+
+	<!-- 글삭제 -->
+	<delete id="shopDeleted" parameterType="Integer">
+		DELETE FROM product WHERE num_pr=#{num}
+	</delete>
+	
+	
+
+</mapper>

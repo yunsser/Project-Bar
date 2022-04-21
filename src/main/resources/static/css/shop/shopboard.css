@@ -1,0 +1,135 @@
+#flex {
+	display: inline-flex;
+	flex-wrap: wrap;
+	width: 80%;
+	justify-content:center;
+	margin-left: 10%;
+}
+
+#flex>div {
+	margin: 20px;
+	border: 1px solid gray;
+	width: 180px;
+	height: 180px;
+	text-align: center;
+}
+
+.check{
+	margin-right: 88%;
+	position: absolute;
+}
+
+
+.btn {
+	color: white;
+	background-color: black;
+	border-color: black;
+	margin: 0 auto;
+}
+.btn-holder {
+	margin-left: 50%;
+} 
+
+
+.container {
+    width: 70%;
+}
+
+#h2{
+	text-align: center;
+    border-top: 2px solid gray;
+    border-bottom: 2px solid gray;
+    width: 70%;
+    margin: auto;
+    padding: 1%;
+    font-size: 12pt;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#form{
+	width: 70%;
+	margin: auto;
+}
+
+.body {
+	padding-top: 70px;
+	padding-bottom: 30px;
+}
+
+.btn-primary{
+    color: #fff;
+    background-color: black;
+    border-color: black;
+    width: 100%;
+    margin: 5%;
+}
+.btn-primary:hover {
+    color: black;
+    background-color: gray;
+    border-color: gray;
+    width: 100%;
+    margin: 5%;
+}
+
+/* .btn-primary:enabled {
+    color: white;
+    background-color: black;
+    border-color: black;
+    width: 100%;
+    margin: 5%;
+} */
+.btn-primary:focus {
+    color: black;
+    background-color: gray;
+    border-color: gray;
+    width: 100%;
+    margin: 5%;
+}
+
+.btlistsav {
+    display: flex;
+    width: 31%;
+    margin: auto;
+}
+
+.btn-sm {
+    font-size: 1rem;
+}
+
+#file-uploard-button{
+	padding: 0px 0px
+}
+
+a{
+	text-decoration-line: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: none;
+	color: gray;
+}
+
+
+
+img{
+	padding: 10px;
+}
+
+
+.paymentlist{
+	color: gray;
+	text-decoration: none;
+	position: relative;
+	top:5px;
+	right: 4px;
+}
+
+.paymentlist:hover{
+	color: black;
+}
+
+

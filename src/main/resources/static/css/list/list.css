@@ -1,0 +1,55 @@
+@charset "EUC-KR";
+
+.table {
+	width: 55%;
+	margin: 0 auto;
+}
+
+.btn {
+	color: white;
+	background-color: black;
+	border-color: black;
+	margin: 0 auto;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	width: 100%
+}
+
+.ul {
+	padding-right: 0;
+}
+
+.page-link {
+	color: black;
+}
+
+.btn-holder {
+	float: right;
+	width: 53%;
+}
+
+a {
+	text-decoration-line: none;
+	color: black;
+}
+a:hover {
+	text-decoration: none;
+	color: gray;
+}
+
+
+.paymentlist{
+	color: gray;
+	text-decoration: none;
+	position: relative;
+	top:5px;
+	right: 4px;
+}
+
+.paymentlist:hover{
+	color: black;
+}
+

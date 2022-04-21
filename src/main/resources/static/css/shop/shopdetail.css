@@ -1,0 +1,120 @@
+@charset "EUC-KR";
+
+.container {
+	width: 70%;
+}
+
+#h2 {
+	text-align: center;
+	border-top: 2px solid gray;
+	border-bottom: 2px solid gray;
+	width: 70%;
+	margin: auto;
+	padding: 1%;
+	font-size: 12pt;
+	text-align: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#form {
+	width: 70%;
+	margin: auto;
+}
+
+.body {
+	padding-top: 70px;
+	padding-bottom: 30px;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: black;
+	border-color: black;
+	width: 100%;
+	margin: 3%;
+}
+
+.btn-primary:hover {
+	color: black;
+	background-color: gray;
+	border-color: gray;
+	width: 100%;
+	margin: 3%;
+}
+
+.btn-primary:focus {
+	color: black;
+	background-color: gray;
+	border-color: gray;
+	width: 100%;
+	margin: 3%;
+}
+
+.btlistsav {
+	display: flex;
+	width: 31%;
+	margin: auto;
+}
+
+.btn-sm {
+	font-size: 1rem;
+}
+
+#file-uploard-button {
+	padding: 0px 0px
+}
+
+a.link_del {
+	border: 1px solid gray;
+	color: gray;
+	font-size: small;
+	text-decoration-line: none;
+	/* text-decoration : none; */
+}
+
+#form {
+	width: 70%;
+	margin: auto;
+}
+
+.paymentlist {
+	color: gray;
+	text-decoration: none;
+	position: relative;
+	top: 5px;
+	right: 4px;
+}
+
+.paymentlist:hover {
+	color: black;
+}
+
+.imgbox {
+	float: left;
+	width: 50%;
+}
+
+.textbox {
+	float: right;
+	width: 50%;
+	height: 250px;
+	padding: 17px;
+}
+
+.product {
+	text-align: center;
+	border-bottom: 1px solid #c0c0c0;
+	padding-bottom: 5px;
+}
+
+.num{
+	width: 40%;
+	text-align: center;
+	padding-left: 25px;
+}
+
+.com{
+
+}

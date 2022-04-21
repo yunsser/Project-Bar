@@ -1,0 +1,53 @@
+@charset "EUC-KR";
+
+.table {
+	width: 55%;
+	margin: 0 auto;
+}
+
+.btn {
+	color: white;
+	background-color: black;
+	border-color: black;
+	margin: 0 auto;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	width: 100%
+}
+
+.ul {
+	padding-right: 0;
+}
+
+.page-link {
+	color: black;
+}
+
+.btn-holder {
+	float: right;
+	width: 53%;
+}
+
+a {
+	text-decoration-line: none;
+	color: black;
+}
+a:hover {
+	text-decoration: none;
+	color: gray;
+}
+
+*{margin:0; padding:0;}
+ul{list-style: none;}
+a{color: inherit; text-decoration: none;}
+#wrap{width:100%; height: 100%; display:flex; flex-direction:row;flex-wrap: wrap; justify-items:flex-start;  align-items : stretch}
+img{max-width:100%;}
+#nav{flex-basis: 20vw;flex-grow: 1; flex-shrink: 4; text-align:center;}
+#nav ul li{line-height: 35px; font-weight:bold; font-size: 20px; }
+.logoli{padding: 20px 0;}
+.content{flex-basis: 20vw; height : 100vh; flex-grow: 4; flex-shrink: 1; overflow:auto;}
+
+

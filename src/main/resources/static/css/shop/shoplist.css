@@ -1,0 +1,109 @@
+#flex {
+	display: flex;
+	flex-wrap: wrap;
+	width: 60%;
+	justify-content: flex-start;
+	margin-left: 24%;
+}
+
+#flex>div {
+	margin: 24px;
+	border: 1px solid gray;
+	width: 159px;
+	height: 161px;
+	text-align: center;
+	border-color: #dee2e6;
+}
+
+.checkitem {
+	margin-right: 88%;
+	position: absolute;
+}
+
+.btn {
+	color: white;
+	background-color: black;
+	border-color: black;
+	margin: 0 auto;
+}
+
+.btn-holder {
+	margin-left: 73%;
+}
+
+.checkAll {
+	margin-left: 25.3%;
+}
+
+.line {
+	border-top: 1px solid #dee2e6;
+	width: 57%;
+	margin-left: 23.2%;
+}
+
+.line2 {
+	border-top: 1px solid #dee2e6;
+	width: 57%;
+	margin-left: 23.2%;
+	margin-top: 34px;
+	margin-bottom: 10px;
+}
+
+.all {
+	color: #9c9c9c;
+}
+
+.pagination {
+	width: 100%;
+	justify-content: center;
+}
+
+.paymentlist{
+	color: gray;
+	text-decoration: none;
+	position: relative;
+	top:5px;
+	right: 4px;
+}
+
+.paymentlist:hover{
+	color: black;
+}
+
+
+
+input[type="checkbox"] {
+	-webkit-appearance: none;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+	outline: none !important;
+	border: 1px solid #c0c0c0;
+	border-radius: 2px;
+	background: #fbfbfb;
+}
+
+input[type="checkbox"]::before {
+	content: "\2713";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	overflow: hidden;
+	transform: scale(0) translate(-50%, -50%);
+	line-height: 1;
+}
+
+input[type="checkbox"]:hover {
+	border-color: rgba(170, 170, 170, 0.5); 
+}
+
+input[type="checkbox"]:checked {
+	background-color: #000000; /* 눌렸을때 체크색 */
+	border-color: rgba(255, 255, 255, 0.3);
+	color: white;
+}
+
+input[type="checkbox"]:checked::before {
+	border-radius: 2px;
+	transform: scale(1) translate(-50%, -50%)
+}
