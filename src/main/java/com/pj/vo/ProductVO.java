@@ -8,9 +8,21 @@ public class ProductVO {
 	private int num_pr, price;
 	private String name, description;
 	private java.sql.Date date_da;
+	private int qty = 1;
 //	============================================================================================
 	public List<ImgVO> img = new ArrayList<>();
 	
+//	@Override
+//	public boolean equals(Object obj) {
+//		ProductVO product = (ProductVO) obj;
+//		return this.getName().equals(product.getName());
+//	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		ProductVO product = (ProductVO) obj;
+		return this.getNum_pr()==(product.getNum_pr());
+	}
 	
 	public int getNum_pr() {
 		return num_pr;
@@ -48,6 +60,12 @@ public class ProductVO {
 	}
 	public void setImg(List<ImgVO> img) {
 		this.img = img;
+	}
+	public int getQty() {
+		return qty;
+	}
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
 	
 	

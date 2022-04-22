@@ -136,6 +136,9 @@ public interface LoginMapper {
 	
 	List<Map<String, String>> getImg();
 	
+	List<Map<String, String>> getimgname();
+
+	
 //	================================================== 
 	
 	

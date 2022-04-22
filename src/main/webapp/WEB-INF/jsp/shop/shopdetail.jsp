@@ -105,7 +105,7 @@
 						<span id="login_log"
 							style="border-bottom: 1px solid white; padding-bottom: 1px; color: gray; position: relative; top: 5px; right: 6px;">
 							${id}님 </span>
-						<a class="paymentlist" href="/bar/payment/list">Cart</a>
+						<a class="paymentlist" href="/bar/cart/list">Cart</a>
 					</c:if>
 					<button type="button" class="btn btn-outline-light me-2"
 						style="color: white; background-color: black; border-color: white;"
@@ -128,36 +128,38 @@
 
 	<!-- 글쓰기 -->
 	<article>
-		<div class="container" role="main">
-
+	<form id="addForm" onsubmit="return cartAdd()">
+	<input type="hidden" value="${product.num_pr}" id="num_pr">
+		<div class="container2" role="main">
 			<p>
 			<div name="addForm" id="form">
 
 				<div class="imgbox">
+					<div class="img">
 					<c:forEach var="i" items="${product.img}">
-						<img src="/upload/${i.imgname}" width="300px" height="300px"
-							alt="제품사진" class="thumb" />
+						<img src="/upload/${i.imgname}" alt="제품사진" class="thumb" />
 					</c:forEach>
+					</div>
 				</div>
 
 				<div class="textbox">
 					<div class="mb-3">
 						<h4 class="product">제품</h4>
-						<label for="title">상품이름:</label> <span class="" id="name">${product.name}</span>
+						<label for="title">상품이름:</label> <span id="name">${product.name}</span>
 					</div>
 
 					<div class="mb-3">
-						<label for="price">가격:</label> <span class="" id="price">${product.price}원</span>
+						<label for="price">가격:</label> <span id="price">${product.price}</span>원
 					</div>
 
 
 					<div class="mb-3">  
-						<label for="description">내용:</label> <span class=""
+						<label for="description">내용:</label> <span 
 							id="description">${product.description}</span>
 					</div>   
 
-					<div>
-						<label>갯수</label> <select id="number" class="num">
+					<div class="mb-3">
+						<label>갯수</label> <select id="count" class="num">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -166,10 +168,7 @@
 						</select>
 					</div>
 
-				</div>
-				<div class="mb-3"
-					style="width: 96%; margin-left: 2%; padding-top: 14px; padding-right: 24px;"
-					id="image_container"></div>
+		
 				<!-- 수정 목록 버튼 -->
 				<div class="btlistsav">
 					<c:if test="${id eq board.author || id eq 'master'}">
@@ -179,23 +178,22 @@
 							onclick="location.href=del_board('${board.num}')">삭제</button>
 					</c:if>
 
-					<button type="button" class="btn btn-sm btn-primary"
-						onclick="location.href='/bar/shop/list'">담기</button>
+					<button type="submit" class="btn btn-sm btn-primary">담기</button>
 					<button type="button" class="btn btn-sm btn-primary"
 						onclick="location.href='/bar/shop/list'">목록</button>
 				</div>
+				</div>
 			</div>
 		</div>
+		</form>
 	</article>
 
 	<!-- 글쓰기 -->
-
+	<p>
 	<p>
 		<!-- 하단 배너 -->
-	<p class="text-center text-muted"
-		style="border-top: 1px solid #dee2e6; padding-top: 10px; margin-top: 90px;">©
-		2022 Yun Company, Inc</p>
-	<!-- 	<script src="/js/board_detail.js"></script> -->
+<div class="line">© 2022 Yun Company, Inc</div>
+		
 	<script src="/js/shop/shopdetail.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

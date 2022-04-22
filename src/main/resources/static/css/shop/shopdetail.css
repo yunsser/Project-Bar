@@ -3,6 +3,10 @@
 .container {
 	width: 70%;
 }
+.container2{
+	width: 50%;
+	margin: auto;
+}
 
 #h2 {
 	text-align: center;
@@ -54,7 +58,6 @@
 
 .btlistsav {
 	display: flex;
-	width: 31%;
 	margin: auto;
 }
 
@@ -99,8 +102,8 @@ a.link_del {
 .textbox {
 	float: right;
 	width: 50%;
-	height: 250px;
-	padding: 17px;
+	height: 100%;
+	margin-bottom:10%;
 }
 
 .product {
@@ -115,6 +118,19 @@ a.link_del {
 	padding-left: 25px;
 }
 
-.com{
+.img{
+	width: 100%;
+	
+}
 
+.line {
+	clear: both;
+	text-align: center;
+	border-top: 1px solid #dee2e6; 
+}
+
+.thumb{
+	width:90%; 
+	height:300px; 
+	margin-bottom:10%;
 }

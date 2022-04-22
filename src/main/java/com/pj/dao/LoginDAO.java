@@ -235,10 +235,9 @@ public class LoginDAO {
 		return loginMapper.getImg();
 	}
 
-
-	
-	
-
+	public List<Map<String, String>> getimgname() {
+		return loginMapper.getimgname();
+	}
 	
 
 }

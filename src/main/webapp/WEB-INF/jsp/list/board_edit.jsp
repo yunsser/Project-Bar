@@ -109,7 +109,7 @@
 						<span id="login_log"
 							style="border-bottom: 1px solid white; padding-bottom: 1px; color: gray; position: relative; top: 5px; right: 6px;">
 							${id}님 </span>
-							<a class="paymentlist" href="/bar/payment/list">Cart</a>
+							<a class="paymentlist" href="/bar/cart/list">Cart</a>
 					</c:if>
 					<button type="button" class="btn btn-outline-light me-2"
 						style="color: white; background-color: black; border-color: white;"

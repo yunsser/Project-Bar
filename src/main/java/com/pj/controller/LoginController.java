@@ -1,6 +1,7 @@
 package com.pj.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ import com.pj.vo.ProductVO;
 
 @Controller
 @RequestMapping("/bar")
-@SessionAttributes("id")
+@SessionAttributes({"id","cart"})
 public class LoginController {   
 
 	@Autowired
@@ -333,7 +334,7 @@ public class LoginController {
 
 	@PostMapping("/comment/list") // 댓글 리스트
 	@ResponseBody
-	private List<CommentVO> mCommentServiceList(Model model){
+	private List<CommentVO> mCommentServiceList(@SessionAttribute(value = "id", required = false) Model model){
 		return dao.commentListService();
 	}
 
@@ -644,10 +645,16 @@ public class LoginController {
 //	게시판 수정화면보기
 
 	@GetMapping("/shop/detail")
-	public String shopdetailBoard(@SessionAttribute(name = "id", required = false) @RequestParam int num, Model model) { // 일치시켜주면																			// 들어감
+	public String shopdetailBoard(@SessionAttribute(name = "id", required = false) String id, @RequestParam int num, Model model,
+			@SessionAttribute(value="cart", required=false) List<ProductVO> cart) { 
+		//System.out.println(id+"사용자아이디");
 		ProductVO product = svc.shopdetailNum(num);
 		model.addAttribute("product", product);
 		//System.out.println(product.getImg().get(0).getImgname()+"확인");
+		if(cart==null) // 아직 세션에 cart 가 생성되어 있지 않은 경우에만 cart를 생성한다
+		{
+			model.addAttribute("cart", new ArrayList<ProductVO>());
+		}
 		return "shop/shopdetail";
 	}
 
@@ -697,6 +704,42 @@ public class LoginController {
 		// System.out.println(nums.length+"확인");
 		Map<String, Boolean> map = new HashMap<>();
 		map.put("userDelete", svc.userDelete(nums));
+		return map;
+	}
+	
+//	===========================================================================================================
+	
+	@PostMapping("/cart/add")
+	@ResponseBody
+	public Map<String, Boolean> cartAdd(ProductVO product, 
+			@SessionAttribute(value = "cart", required = false) List<ProductVO> cart)
+	{
+		boolean added = svc.addItem(product, cart);
+		Map<String,Boolean> map = new HashMap<>();
+		map.put("added", added);
+		return map;
+	}
+	
+	@GetMapping("/cart/list")
+	public String showCart(Model model, @SessionAttribute(value = "cart", required = false) List<ProductVO> cart)
+	{
+		if(cart==null) {
+			model.addAttribute("list", cart);
+			return "/cart/cartlist";
+		}
+
+		model.addAttribute("list", cart);
+		model.addAttribute("total", svc.getTotalPrice(cart));
+		return "/cart/cartlist";
+	}
+	
+	@PostMapping("/cart/order")
+	@ResponseBody
+	public Map<String, Boolean> orderBook(@SessionAttribute(value = "cart", required = false) List<ProductVO> cart)
+	{
+		boolean ordered = svc.order(cart);
+		Map<String,Boolean> map = new HashMap<>();
+		map.put("ordered", ordered);
 		return map;
 	}
 	

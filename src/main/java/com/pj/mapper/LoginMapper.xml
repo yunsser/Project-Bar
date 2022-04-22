@@ -366,6 +366,15 @@
 		DELETE FROM product WHERE num_pr=#{num}
 	</delete>
 	
+	<!--  -->
+    <select id="getimgname" resultType="map" parameterType="Integer">
+        SELECT * FROM product p INNER JOIN img i ON p.num_pr=i.prd_num
+        <where>
+          <foreach item="num_pr" index="index" collection="map" separator="OR">
+                p.num_pr=#{num_pr}
+          </foreach>
+      </where>
+    </select> 
 	
 
 </mapper>

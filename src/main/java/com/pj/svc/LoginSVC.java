@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mysql.cj.protocol.x.Notice;
@@ -547,7 +548,39 @@ public class LoginSVC {
 		return delCnt == nums.length;
 	}
 
+//	========================================================================================================================
 
+	public boolean addItem(ProductVO product, List<ProductVO> cart)
+	{
+		//동일 아이템이 이미 장바구니에 들어 있는지 확인
+		if(cart.contains(product)) {
+			int idx = cart.indexOf(product);
+			cart.get(idx).setQty(cart.get(idx).getQty() + product.getQty() );
+			return true;
+		}
+		cart.add(product);
+		//System.out.println(product.getNum_pr()+"확인");
+		return true;
+	}
+
+	public int getTotalPrice(List<ProductVO> cart)
+	{
+		int total = 0;
+		for(int i=0;i<cart.size();i++) {
+			total += cart.get(i).getPrice() * cart.get(i).getQty();
+		}
+		return total;
+	}
+	
+	@Transactional(rollbackFor={Exception.class})
+	public boolean order(List<ProductVO> cart) 
+	{
+		for(int i=0;i<cart.size();i++)
+		{
+			//dao.save(cart.get(i));
+		}
+		return true;
+	}
 
 
 

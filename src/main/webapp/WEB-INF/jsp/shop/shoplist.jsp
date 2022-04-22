@@ -100,7 +100,7 @@
 						<span id="login_log"
 							style="border-bottom: 1px solid white; padding-bottom: 1px; color: gray; position: relative; top: 5px; right: 6px;">
 							${id}님 </span>
-							<a class="paymentlist" href="/bar/payment/list">Cart</a>
+							<a class="paymentlist" href="/bar/cart/list">Cart</a>
 					</c:if>
 					<button type="button" class="btn btn-outline-light me-2"
 						style="color: white; background-color: black; border-color: white;"
@@ -125,6 +125,7 @@
 	<span class="all">전체선택</span>
 	<div class="line"></div>
 
+	<form id="addForm" onsubmit="return cartAdd()">
 	<div id="flex">
 		<c:forEach var="c" items="${list2}" varStatus="status">
 			<div class="item">
@@ -138,9 +139,11 @@
 		</c:forEach>
 	</div>
 	<p>
+	
 	<!-- 선 -->
 	<div class="line2"></div>
 	<!-- 선 -->
+	
 	
 <!-- 페이징 -->
 
@@ -181,11 +184,14 @@
 				<span>글작성</span>
 			</button>
 		</c:if>
+		<c:if test="${id != 'master'}">
 		<button class="btn btn-1 hover-filled-slide-right" type="button"
 			 id="choice" style="display: inline-flex;">
 			<span>담기</span>
 		</button>
+		</c:if>
 	</div>
+	</form>
 	<p>
 
 		<!-- 하단 배너 -->
