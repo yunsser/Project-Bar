@@ -136,9 +136,7 @@
 
 				<div class="imgbox">
 					<div class="img">
-					<c:forEach var="i" items="${product.img}">
-						<img src="/upload/${i.imgname}" alt="제품사진" class="thumb" />
-					</c:forEach>
+						<img src="/upload/${product.imgname}" alt="제품사진" class="thumb" />
 					</div>
 				</div>
 
@@ -171,14 +169,16 @@
 		
 				<!-- 수정 목록 버튼 -->
 				<div class="btlistsav">
-					<c:if test="${id eq board.author || id eq 'master'}">
+					<c:if test="${id eq 'master'}">
 						<button type="button" class="btn btn-sm btn-primary"
-							onclick="location.href='/bar/boardEdit?num=${board.num}'">수정</button>
+							onclick="location.href='/bar/boardEdit?num=${product.num_pr}'">수정</button>
 						<button type="button" class="btn btn-sm btn-primary"
-							onclick="location.href=del_board('${board.num}')">삭제</button>
+							onclick="location.href=del_board('${product.num_pr}')">삭제</button>
 					</c:if>
 
+					<c:if test="${id != 'master'}">
 					<button type="submit" class="btn btn-sm btn-primary">담기</button>
+					</c:if>
 					<button type="button" class="btn btn-sm btn-primary"
 						onclick="location.href='/bar/shop/list'">목록</button>
 				</div>

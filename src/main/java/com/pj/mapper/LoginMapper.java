@@ -136,7 +136,16 @@ public interface LoginMapper {
 	
 	List<Map<String, String>> getImg();
 	
-	List<Map<String, String>> getimgname();
+	List<Map<String, String>> getimgname(int num);
+
+	List<Map<String, String>> getImgFind(int num);
+
+	/* List<Map<String, Object>> cartList(); */
+
+	List<ProductVO> getCartProd(List<ProductVO> list);
+
+	List<ProductVO> shopChoice(int[] list);
+
 
 	
 //	================================================== 

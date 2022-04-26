@@ -235,9 +235,25 @@ public class LoginDAO {
 		return loginMapper.getImg();
 	}
 
-	public List<Map<String, String>> getimgname() {
-		return loginMapper.getimgname();
+	public List<Map<String, String>> getimgname(int num) {
+		return loginMapper.getimgname(num);
 	}
-	
+
+	public List<Map<String, String>> getImgFind(int num) {
+		return loginMapper.getImgFind(num);
+	}
+
+	public List<ProductVO> getCartProd(List<ProductVO> list) {
+		return loginMapper.getCartProd(list);
+	}
+
+	public List<ProductVO> shopChoice(int[] list) {
+		return loginMapper.shopChoice(list);
+		
+	}
+
+
+
+
 
 }

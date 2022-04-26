@@ -125,12 +125,12 @@
 	<span class="all">전체선택</span>
 	<div class="line"></div>
 
-	<form id="addForm" onsubmit="return cartAdd()">
+	<form id="addForm">
 	<div id="flex">
 		<c:forEach var="c" items="${list2}" varStatus="status">
 			<div class="item">
 				<input type="checkbox" class="checkitem" id="checkitem"
-					name="checkitem"> <a
+					name="checkitem" data-num="${list[status.index].num_pr}"> <a
 					href="/bar/shop/detail?num=${c.prd_num}"><img alt="사진"
 					src="/upload/${c.imgname}" style="width: 154px; height: 158px;"></a>
 				<div>${list[status.index].name}</div>

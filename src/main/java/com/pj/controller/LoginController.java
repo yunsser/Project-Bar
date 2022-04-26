@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -22,16 +20,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pj.dao.LoginDAO;
+import com.pj.mapper.LoginMapper;
 import com.pj.svc.LoginSVC;
 import com.pj.vo.BoardVO;
 import com.pj.vo.CommentVO;
@@ -43,8 +40,8 @@ import com.pj.vo.ProductVO;
 
 @Controller
 @RequestMapping("/bar")
-@SessionAttributes({"id","cart"})
-public class LoginController {   
+@SessionAttributes({ "id", "cart" })
+public class LoginController {
 
 	@Autowired
 	private LoginSVC svc;
@@ -268,11 +265,10 @@ public class LoginController {
 //	게시판 수정화면보기
 
 	@GetMapping("/boardDetail") // http://localhost/bbs/detail
-	public String detailBoard(@SessionAttribute(name = "id", required = false)String id, @RequestParam int num, Model model) { // 일치시켜주면																			// 들어감
+	public String detailBoard(@SessionAttribute(name = "id", required = false) String id, @RequestParam int num,
+			Model model) { // 일치시켜주면 // 들어감
 		BoardVO board = svc.detailNum(num);
-		
-	
-		
+
 		model.addAttribute("board", board);
 		return "list/board_detail";
 	}
@@ -334,13 +330,14 @@ public class LoginController {
 
 	@PostMapping("/comment/list") // 댓글 리스트
 	@ResponseBody
-	private List<CommentVO> mCommentServiceList(@SessionAttribute(value = "id", required = false) Model model){
+	private List<CommentVO> mCommentServiceList(@SessionAttribute(value = "id", required = false) Model model) {
 		return dao.commentListService();
 	}
 
 	@PostMapping("/comment/insert") // 댓글 작성
 	@ResponseBody
-	private int mCommentServiceInsert(@SessionAttribute(name = "id", required = false)String id, @RequestParam int bno, @RequestParam String content) {
+	private int mCommentServiceInsert(@SessionAttribute(name = "id", required = false) String id, @RequestParam int bno,
+			@RequestParam String content) {
 		CommentVO comment = new CommentVO();
 		comment.setBno(bno);
 		comment.setContent(content);
@@ -350,7 +347,8 @@ public class LoginController {
 
 	@PostMapping("/comment/update") // 댓글 수정
 	@ResponseBody
-	private int mCommentServiceUpdateProc(@SessionAttribute(name = "id", required = false) @RequestParam int cno, @RequestParam String content, Model model) {
+	private int mCommentServiceUpdateProc(@SessionAttribute(name = "id", required = false) @RequestParam int cno,
+			@RequestParam String content, Model model) {
 		CommentVO comment = new CommentVO();
 		comment.setCno(cno);
 		comment.setContent(content);
@@ -359,7 +357,8 @@ public class LoginController {
 
 	@PostMapping("/comment/delete/{cno}") // 댓글 삭제
 	@ResponseBody
-	private int mCommentServiceDelete(@SessionAttribute(name = "id", required = false) @PathVariable int cno, Model model) {
+	private int mCommentServiceDelete(@SessionAttribute(name = "id", required = false) @PathVariable int cno,
+			Model model) {
 		CommentVO comment = new CommentVO();
 		return dao.commentDeleteService(cno);
 	}
@@ -458,7 +457,7 @@ public class LoginController {
 		return map;
 
 	}
-	
+
 //	파일 다운로드
 	@GetMapping("/notice/download/{filename}")
 	public ResponseEntity<Resource> noticedownload(HttpServletRequest request, @PathVariable String filename) {
@@ -505,14 +504,16 @@ public class LoginController {
 //	게시판 수정화면보기
 
 	@GetMapping("/notice/boardDetail")
-	public String noticedetailBoard(@SessionAttribute(name = "id", required = false) @RequestParam int num, Model model) { // 일치시켜주면																			// 들어감
+	public String noticedetailBoard(@SessionAttribute(name = "id", required = false) @RequestParam int num,
+			Model model) { // 일치시켜주면 // 들어감
 		NoticeVO notice = svc.noticedetailNum(num);
 		model.addAttribute("notice", notice);
 		return "notice/noticedetail";
 	}
 
 	@GetMapping("/notice/boardEdit")
-	public String noticedetailedit(@SessionAttribute(name = "id", required = false) @RequestParam int num, Model model) {
+	public String noticedetailedit(@SessionAttribute(name = "id", required = false) @RequestParam int num,
+			Model model) {
 		NoticeVO notice = svc.noticedetailNum(num);
 		model.addAttribute("notice", notice);
 		return "notice/noticeedit";
@@ -547,14 +548,20 @@ public class LoginController {
 		map.put("noticedeleteFileInfo", noticedeleteFileInfo);
 		return map;
 	}
-	
+
 //	==========================================================================================================================shop
-	
+
 	@GetMapping("/shop/list")
 	public String shopList(@SessionAttribute(name = "id", required = false) String id, PagingVO vo, Model model,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
-			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
-
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+			@SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {
+		if (cart == null) {
+			//System.out.println("세션에 카트생성");
+			cart = new ArrayList<>();
+			model.addAttribute("cart", cart);
+		}
+		
 		if (id == null) {
 			return "redirect:/bar/login";
 		} else {
@@ -567,6 +574,7 @@ public class LoginController {
 			} else if (cntPerPage == null) {
 				cntPerPage = "15";
 			}
+
 			List<Map<String, String>> list = dao.getShop();
 			List<Map<String, String>> list2 = dao.getImg();
 			model.addAttribute("list", list);
@@ -578,7 +586,7 @@ public class LoginController {
 		}
 
 	}
-	
+
 //	게시판 글쓰기
 	@GetMapping("/shop/board")
 	public String shopboard() {
@@ -598,7 +606,7 @@ public class LoginController {
 		return map;
 
 	}
-	
+
 //	파일 다운로드
 	@GetMapping("/shop/download/{filename}")
 	public ResponseEntity<Resource> shopdownload(HttpServletRequest request, @PathVariable String filename) {
@@ -645,13 +653,13 @@ public class LoginController {
 //	게시판 수정화면보기
 
 	@GetMapping("/shop/detail")
-	public String shopdetailBoard(@SessionAttribute(name = "id", required = false) String id, @RequestParam int num, Model model,
-			@SessionAttribute(value="cart", required=false) List<ProductVO> cart) { 
-		//System.out.println(id+"사용자아이디");
+	public String shopdetailBoard(@SessionAttribute(name = "id", required = false) String id, @RequestParam int num,
+			Model model, @SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {
+		// System.out.println(id+"사용자아이디");
 		ProductVO product = svc.shopdetailNum(num);
 		model.addAttribute("product", product);
-		//System.out.println(product.getImg().get(0).getImgname()+"확인");
-		if(cart==null) // 아직 세션에 cart 가 생성되어 있지 않은 경우에만 cart를 생성한다
+		// System.out.println(product.getImg().get(0).getImgname()+"확인");
+		if (cart == null) // 아직 세션에 cart 가 생성되어 있지 않은 경우에만 cart를 생성한다
 		{
 			model.addAttribute("cart", new ArrayList<ProductVO>());
 		}
@@ -670,7 +678,8 @@ public class LoginController {
 	@ResponseBody
 	public Map<String, Boolean> shopupdateBoard(
 			@SessionAttribute(name = "id", required = false) @RequestParam(name = "files", required = false) MultipartFile[] mfiles,
-			HttpServletRequest request, ProductVO product, @RequestParam("delfiles") List<String> delfiles, Model model) {
+			HttpServletRequest request, ProductVO product, @RequestParam("delfiles") List<String> delfiles,
+			Model model) {
 		Map<String, Boolean> map = new HashMap<>();
 		boolean noticeUpdated = svc.shopUpdated(request, product, mfiles, delfiles);
 		map.put("noticeUpdated", noticeUpdated);
@@ -696,52 +705,63 @@ public class LoginController {
 	}
 
 //	===========================================================================================================
-	
+
 //	상품 목록 체크값 넘기기
 	@PostMapping("/shop/shopChoice")
 	@ResponseBody
-	public Map<String, Boolean> shopChoice(@RequestParam(value = "chbox[]") int[] nums) {
-		// System.out.println(nums.length+"확인");
+	public Map<String, Boolean> shopChoice(@RequestParam(value = "chbox[]") int[] list,
+			@SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {
 		Map<String, Boolean> map = new HashMap<>();
-		map.put("userDelete", svc.userDelete(nums));
+		map.put("shopChoice", svc.shopChoice(list, cart));
 		return map;
 	}
-	
+
 //	===========================================================================================================
-	
+
 	@PostMapping("/cart/add")
 	@ResponseBody
-	public Map<String, Boolean> cartAdd(ProductVO product, 
-			@SessionAttribute(value = "cart", required = false) List<ProductVO> cart)
-	{
+	public Map<String, Boolean> cartAdd(ProductVO product,
+			@SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {
 		boolean added = svc.addItem(product, cart);
-		Map<String,Boolean> map = new HashMap<>();
+		Map<String, Boolean> map = new HashMap<>();
 		map.put("added", added);
 		return map;
 	}
-	
+
 	@GetMapping("/cart/list")
-	public String showCart(Model model, @SessionAttribute(value = "cart", required = false) List<ProductVO> cart)
-	{
-		if(cart==null) {
+	public String showCart(Model model, @SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {
+		if(cart.size() == 0) {
+			//System.out.println("세션에 카트생성");
+//			cart = new ArrayList<>();
 			model.addAttribute("list", cart);
 			return "/cart/cartlist";
+		} else {
+			model.addAttribute("list", dao.getCartProd(cart));
+			model.addAttribute("total", svc.getTotalPrice(cart));
+			
 		}
-
-		model.addAttribute("list", cart);
-		model.addAttribute("total", svc.getTotalPrice(cart));
 		return "/cart/cartlist";
 	}
-	
+
 	@PostMapping("/cart/order")
 	@ResponseBody
-	public Map<String, Boolean> orderBook(@SessionAttribute(value = "cart", required = false) List<ProductVO> cart)
-	{
+	public Map<String, Boolean> orderBook(@SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {
 		boolean ordered = svc.order(cart);
-		Map<String,Boolean> map = new HashMap<>();
+		Map<String, Boolean> map = new HashMap<>();
 		map.put("ordered", ordered);
 		return map;
 	}
 	
-	
+	@PostMapping("/cart/delete")
+	@ResponseBody
+	public Map<String,Boolean> cartDeleted(Model model,@RequestParam(value = "chbox[]") int[] nums,
+			@SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {	
+		System.out.println(nums.length + "c" + cart.size());
+		Map<String,Boolean> map = new HashMap<>();
+		boolean deleted = svc.cartDeleted(cart, nums);
+		map.put("deleted",deleted);
+		return map;
+	}
+
+
 }

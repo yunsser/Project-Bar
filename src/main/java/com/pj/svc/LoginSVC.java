@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.jasper.tagplugins.jstl.core.Remove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -452,7 +453,7 @@ public class LoginSVC {
 		ProductVO product = new ProductVO();
 		int size = list.size();
 		for (int i = 0; i < size; i++) {
-			Map<String, Object> map = list.get(i);   
+			Map<String, Object> map = list.get(i);
 			if (i == 0) {
 				product.setNum_pr((int) map.get("num_pr"));
 				product.setName((String) map.get("name"));
@@ -460,24 +461,24 @@ public class LoginSVC {
 				product.setDescription((String) map.get("description"));
 				product.setDate_da((java.sql.Date) map.get("date_da"));
 			}
-			Object obj = map.get("imgname");
-			if (obj != null) {
+			String imgname = (String) map.get("imgname");
+			if (imgname != null) {
 				ImgVO img = new ImgVO();
-				img.setImg_num((int) map.get("img_num"));
-				/* att.setNotice_num((int) map.get("notice_num")); */
-				img.setImgname((String) map.get("imgname"));
-				img.setImgsize((int) map.get("imgsize"));
-				product.img.add(img);
+//				img.setImg_num((int) map.get("img_num"));
+//				/* att.setNotice_num((int) map.get("notice_num")); */
+//				img.setImgname((String) map.get("imgname"));
+//				img.setImgsize((int) map.get("imgsize"));
+				product.setImgname(imgname);
 			}
 		}
 		return product;
 	}
 
 	// 글업데이트
-		public boolean shopUpdated(ProductVO product) {
-			return dao.shopUpdated(product);   
-		}
-	
+	public boolean shopUpdated(ProductVO product) {
+		return dao.shopUpdated(product);
+	}
+
 	public boolean shopUpdated(HttpServletRequest request, ProductVO product, MultipartFile[] mfiles,
 			List<String> delfiles) {
 		boolean saved = shopUpdated(product); // 글 저장
@@ -497,17 +498,17 @@ public class LoginSVC {
 				for (int i = 0; i < mfiles.length; i++) {
 					String filename = mfiles[i].getOriginalFilename();
 
-					mfiles[i].transferTo(new File(savePath + "/" +System.currentTimeMillis()/100000 + filename)); // 서버측 디스크
+					mfiles[i].transferTo(new File(savePath + "/" + System.currentTimeMillis() / 100000 + filename)); // 서버측
+																														// 디스크
 
 					ImgVO img = new ImgVO();
 					img.setImg_num(num);
-					img.setImgname(System.currentTimeMillis()/100000+filename);
+					img.setImgname(System.currentTimeMillis() / 100000 + filename);
 					img.setImgsize((int) mfiles[i].getSize());
 					fSaved = dao.shopFileInfo(img);
 					if (fSaved)
 						saveCnt++;
 				}
-				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -515,7 +516,7 @@ public class LoginSVC {
 			return fileCnt == saveCnt ? true : false;
 
 		}
-		
+
 		return saved;
 	}
 
@@ -525,9 +526,10 @@ public class LoginSVC {
 
 	public boolean shopdeleteFileInfo(List<String> delfiles) {
 		List<Boolean> ret = new ArrayList<>();
-		for(int i=0; i<delfiles.size(); i++) {
+		for (int i = 0; i < delfiles.size(); i++) {
 			Boolean res = dao.shopdeleteFileInfo(Integer.parseInt(delfiles.get(i)));
-			if(res) ret.add(res);
+			if (res)
+				ret.add(res);
 		}
 		return delfiles.size() == ret.size();
 	}
@@ -535,64 +537,92 @@ public class LoginSVC {
 	public String getShopFilename(int num) {
 		return dao.getShopFilename(num);
 	}
-	
+
 //	========================================================================================================================
 
-	//	상품 목록 체크값 넘기기
-	public boolean shopChoice(int[] nums) {
-		int delCnt = 0;
-		for (int i = 0; i < nums.length; i++) {
-			if (dao.userDelete(nums[i]))
-				delCnt++; // 숫자 1개
-		}
-		return delCnt == nums.length;
+	// 상품 목록 체크값 넘기기
+	public boolean shopChoice(int[] nums, List<ProductVO> cart) {
+		List<ProductVO> list = dao.shopChoice(nums);
+		boolean added = cart.addAll(list);
+		return added;
 	}
 
 //	========================================================================================================================
 
-	public boolean addItem(ProductVO product, List<ProductVO> cart)
-	{
-		//동일 아이템이 이미 장바구니에 들어 있는지 확인
-		if(cart.contains(product)) {
+	public boolean addItem(ProductVO product, List<ProductVO> cart) {
+		// 동일 아이템이 이미 장바구니에 들어 있는지 확인
+		if (cart.contains(product)) {
 			int idx = cart.indexOf(product);
-			cart.get(idx).setQty(cart.get(idx).getQty() + product.getQty() );
+			cart.get(idx).setQty(cart.get(idx).getQty() + product.getQty());
 			return true;
 		}
 		cart.add(product);
-		//System.out.println(product.getNum_pr()+"확인");
+		// System.out.println(product.getNum_pr()+"확인");
 		return true;
 	}
 
-	public int getTotalPrice(List<ProductVO> cart)
-	{
+	public int getTotalPrice(List<ProductVO> cart) {
 		int total = 0;
-		for(int i=0;i<cart.size();i++) {
+		for (int i = 0; i < cart.size(); i++) {
 			total += cart.get(i).getPrice() * cart.get(i).getQty();
 		}
 		return total;
 	}
-	
-	@Transactional(rollbackFor={Exception.class})
-	public boolean order(List<ProductVO> cart) 
-	{
-		for(int i=0;i<cart.size();i++)
-		{
-			//dao.save(cart.get(i));
+
+	@Transactional(rollbackFor = { Exception.class })
+	public boolean order(List<ProductVO> cart) {
+		for (int i = 0; i < cart.size(); i++) {
+			// dao.save(cart.get(i));
 		}
 		return true;
 	}
 
+	public boolean cartDeleted(List<ProductVO> cart, int[] nums) {
+		for (int k = 0; k < cart.size(); k++) {
+			for (int i = 0; i < nums.length; i++) {
+				if (cart.get(k).getNum_pr() == nums[i]) {
+					cart.remove(k);
+				}
+			}
+		}
+		return true;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
+//	public List<ProductVO> cartList() {
+//		List<Map<String, Object>> list = dao.cartList();
+//		List<ProductVO> list2 = new ArrayList<>();
+//		// Map에 저장된 게시글 한 행의 정보를 BoardVO 객체 한개로 표현한다
+//
+//		for (int i = 0; i < list.size(); i++) {
+//			Map<String, Object> m = list.get(i);
+//			ProductVO product = new ProductVO();
+//			product.setNum_pr((Integer) m.get("num_pr"));
+//			product.setName((String) m.get("name"));
+//			product.setPrice((Integer) m.get("price"));
+//
+//
+//			if (m.get("fnames") != null) // 첨부파일을 가진 글이라면...
+//			{
+//				String nums = (String) m.get("nums");
+//				String[] num = nums.split("\\|");
+//
+//				String fnames = (String) m.get("fnames");
+//				String[] fn = fnames.split("\\|");
+//
+//				String fsizes = (String) m.get("sizes");
+//				String[] size = fsizes.split("\\|");
+//
+//				for (int j = 0; j < fn.length; j++) {
+//					ImgVO img = new ImgVO();
+//					img.setImg_num(Integer.parseInt(num[j]));
+//					img.setImgname(fn[j]);
+//					img.setImgsize(Integer.parseInt(size[j]));
+//					product.img.add(img);
+//				}
+//			}
+//			list2.add(product);
+//		} // end of for()
+//		return list2;
+//	}
 
 }

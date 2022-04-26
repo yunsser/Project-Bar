@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
@@ -129,28 +130,43 @@
 				style="width: 70%; text-align: center; margin: auto;">
 				<thead>
 					<tr>
-						<th><input type="checkbox" id="allCheck" name="allCheck"></th>
+						<th><input type="checkbox" id="checkAll" name="checkAll" class="checkAll"></th>
 						<th></th>
 						<th>PRODUCT</th>
+						<th>CONT</th>
 						<th>PRICE</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th><input type="checkbox" class="userCheck" name="userCheck"></th>
-						<c:forEach var="u" items="${list2}">
-							<td><img src="/upload/${u.imgname}" alt="사진"></td>
-							<td>${u.name}</td>
-							<td>${u.price}</td>
-						</c:forEach>
-					</tr>
+					<c:forEach var="p" items="${list}">
+						<tr>
+							<th><input type="checkbox" class="cartCheck"
+								name="cartCheck" id="cartCheck" data-num="${p.num_pr}"></th>
+							
+							<td><img src="/upload/${p.imgname}" alt="사진" style="width: 75px;"></td>
+							<td>${p.name}</td>
+							<td>${p.qty}</td>
+							<td>${p.price}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 	</div>
 	<!-- 게시판 -->
 	<p>
+		<!-- 총액 -->
+	<div class="totalnum">TOTAL : ${total}원</div>
+	<!-- 총액 -->
+
+	<p>
 	<div class="btn-holder" style="width: 20%;">
+		<c:if test="${id!='master'}">
+		<button class="btn btn-1 hover-filled-slide-right" type="button"
+			onclick="goPay" style="display: inline-block;">
+			<span>결제</span>
+		</button>
+		</c:if>
 		<button class="btn btn-1 hover-filled-slide-right" type="button"
 			id="delete" style="display: inline-block;">
 			<span>삭제</span>

@@ -43,6 +43,7 @@ $(".checkitem").click(function() {
  $("#choice").click(function(){
   var confirm_val = confirm("장바구니에 담으시겠습니까??");
   
+  
   if(confirm_val) {
    var checkArr = new Array();
    
@@ -50,28 +51,30 @@ $(".checkitem").click(function() {
     checkArr.push($(this).attr("data-num"));
    });
    
-    
+  // alert(checkArr); 
+   
    $.ajax({
-    url : '/bar/cart/add',
+    url : '/bar/shop/shopChoice',
     type : 'post',
     data : { chbox : checkArr },
     dataType:'json',
     success : function(res){
-		alret('장바구니로 이동되었습니다');
-		location.href = "/bar/shop/list";		
-	
-	
-	
-    }
+		alert('장바구니로 담았습니다');
+		location.href = "/bar/cart/list";
+    },
+    error:function(xhr, status, err){
+		alert('에러:'+err);
+	}
+    
    });
   } 
  });
  
  
  
- function cartAdd()
+/*function cartAdd()
 {
-	var obj = {};
+	
 	obj.num_pr = $('#num_pr').val();
 	obj.name = $('#name').text();
 	obj.price = $('#price').text();
@@ -94,4 +97,4 @@ $(".checkitem").click(function() {
 		}
 	});
 	return false;
-}
+}*/

@@ -95,19 +95,22 @@
 
 	<!-- 수정하기 -->
 	<update id="boardUpdate" parameterType="com.pj.vo.BoardVO">
-		UPDATE board SET title=#{title},
+		UPDATE board SET
+		title=#{title},
 		contents=#{contents}
 		WHERE num=#{num}
 	</update>
 
 	<!-- 파일삭제 -->
 	<delete id="deleteFileInfo" parameterType="Integer">
-		DELETE FROM attach WHERE att_num=#{num}
+		DELETE FROM attach
+		WHERE att_num=#{num}
 	</delete>
 
 	<!-- 글삭제 -->
 	<delete id="boardDeleted" parameterType="Integer">
-		DELETE FROM board WHERE num=#{num}
+		DELETE FROM board WHERE
+		num=#{num}
 	</delete>
 
 
@@ -136,7 +139,7 @@
 
 		WHERE RN BETWEEN #{start} AND #{end}
 	</select>
-	
+
 	<!-- ==================================================================================================== -->
 
 	<!-- 마스터 리스트 -->
@@ -178,7 +181,7 @@
 
 	<!-- ======================================================================================================== -->
 
-	
+
 	<select id="commentCount" resultType="int">
 		SELECT
 		COUNT(*)
@@ -193,7 +196,8 @@
 
 	<insert id="commentInsert" parameterType="com.pj.vo.CommentVO">
 		INSERT INTO
-		comment (CNO, BNO, CONTENT, WRITER, REG_DATE)
+		comment
+		(CNO, BNO, CONTENT, WRITER, REG_DATE)
 		VALUES(#{cno},#{bno},#{content},#{writer},now())
 	</insert>
 
@@ -205,7 +209,8 @@
 	</update>
 
 	<delete id="commentDelete" parameterType="int">
-		DELETE FROM comment WHERE CNO = #{cno}
+		DELETE FROM comment
+		WHERE CNO = #{cno}
 	</delete>
 
 	<!-- ======================================================================================================== -->
@@ -225,18 +230,21 @@
 		FROM (
 		SELECT *
 		FROM notice,
-		(SELECT @ROWNUM:=0)
+		(SELECT
+		@ROWNUM:=0)
 		t
 		ORDER BY num_no DESC
 		) A
 		) B
 
-		WHERE RN BETWEEN #{start} AND #{end}
+		WHERE RN BETWEEN #{start} AND
+		#{end}
 	</select>
-	
+
 	<!-- 리스트 -->
 	<select id="getNotice" resultType="map">
-		SELECT num_no, master, title_no,
+		SELECT num_no, master,
+		title_no,
 		content_no, ndate FROM notice
 	</select>
 
@@ -248,45 +256,53 @@
 	</insert>
 
 	<!-- 파일업로드 -->
-	<insert id="noticeFileInfo" parameterType="com.pj.vo.Notice_attachVO">
+	<insert id="noticeFileInfo"
+		parameterType="com.pj.vo.Notice_attachVO">
 		INSERT INTO notice_attach
-		VALUES(null, #{notice_num}, #{no_filename}, #{no_filesize})
+		VALUES(null, #{notice_num},
+		#{no_filename}, #{no_filesize})
 	</insert>
 
 	<!-- 파일 불러오기 -->
 	<select id="getNoriceFilename" parameterType="Integer"
 		resultType="String">
-		SELECT no_filename FROM notice_attach WHERE no_att_num=#{no_att_num}
+		SELECT no_filename FROM notice_attach WHERE
+		no_att_num=#{no_att_num}
 	</select>
-	
+
 	<!-- 게시글 불러오기 -->
-	<select id="noticedetailNum" resultType="map" parameterType="Integer">
+	<select id="noticedetailNum" resultType="map"
+		parameterType="Integer">
 		SELECT *
 		FROM notice b
 		LEFT OUTER JOIN notice_attach a
-		ON b.num_no=a.notice_num
+		ON
+		b.num_no=a.notice_num
 		WHERE b.num_no=#{num_no};
 	</select>
 
 	<!-- 수정하기 -->
 	<update id="noticeUpdated" parameterType="com.pj.vo.NoticeVO">
-		UPDATE notice SET title_no=#{title_no},
+		UPDATE notice SET
+		title_no=#{title_no},
 		content_no=#{content_no}
 		WHERE num_no=#{num_no}
 	</update>
 
 	<!-- 파일삭제 -->
 	<delete id="noticedeleteFileInfo" parameterType="Integer">
-		DELETE FROM notice_attach WHERE no_att_num=#{num}
+		DELETE FROM
+		notice_attach WHERE no_att_num=#{num}
 	</delete>
 
 	<!-- 글삭제 -->
 	<delete id="noticeDeleted" parameterType="Integer">
-		DELETE FROM notice WHERE num_no=#{num}
+		DELETE FROM notice
+		WHERE num_no=#{num}
 	</delete>
-	
+
 	<!-- ======================================================================================================== -->
-	
+
 	<!-- 공지 총 게시글 갯수 출력 -->
 	<select id="countShop" resultType="int">
 		SELECT COUNT(*) FROM product
@@ -302,21 +318,23 @@
 		FROM (
 		SELECT *
 		FROM product,
-		(SELECT @ROWNUM:=0)
+		(SELECT
+		@ROWNUM:=0)
 		t
 		ORDER BY num_pr DESC
 		) A
 		) B
 
-		WHERE RN BETWEEN #{start} AND #{end}
+		WHERE RN BETWEEN #{start} AND
+		#{end}
 	</select>
-	
+
 	<!-- 리스트 -->
 	<select id="getShop" resultType="map">
 		SELECT num_pr, name, price,
 		description, date_da FROM product
 	</select>
-	
+
 	<select id="getImg" resultType="map">
 		SELECT * FROM img
 	</select>
@@ -339,42 +357,93 @@
 		resultType="String">
 		SELECT imgname FROM Img WHERE img_num=#{img_num}
 	</select>
-	
+
 	<!-- 게시글 불러오기 -->
-	<select id="shopdetailNum" resultType="map" parameterType="Integer">
+	<select id="shopdetailNum" resultType="map"
+		parameterType="Integer">
 		SELECT *
 		FROM product b
 		LEFT OUTER JOIN img a
-		ON b.num_pr=a.prd_num
+		ON
+		b.num_pr=a.prd_num
 		WHERE b.num_pr=#{num_pr};
 	</select>
 
 	<!-- 수정하기 -->
 	<update id="shopUpdated" parameterType="com.pj.vo.ProductVO">
-		UPDATE product SET name=#{name},
+		UPDATE product SET
+		name=#{name},
 		price=#{price}, description=#{description}
-		WHERE num_pr=#{num_pr}
+		WHERE
+		num_pr=#{num_pr}
 	</update>
 
 	<!-- 파일삭제 -->
 	<delete id="shopdeleteFileInfo" parameterType="Integer">
-		DELETE FROM img WHERE img_num=#{num}
+		DELETE FROM img
+		WHERE img_num=#{num}
 	</delete>
 
 	<!-- 글삭제 -->
 	<delete id="shopDeleted" parameterType="Integer">
-		DELETE FROM product WHERE num_pr=#{num}
+		DELETE FROM product WHERE
+		num_pr=#{num}
 	</delete>
-	
-	<!--  -->
-    <select id="getimgname" resultType="map" parameterType="Integer">
-        SELECT * FROM product p INNER JOIN img i ON p.num_pr=i.prd_num
-        <where>
-          <foreach item="num_pr" index="index" collection="map" separator="OR">
-                p.num_pr=#{num_pr}
-          </foreach>
-      </where>
-    </select> 
-	
+
+	<!-- -->
+	<select id="getimgname" resultType="map" parameterType="Integer">
+		SELECT
+		* FROM product p INNER JOIN img i ON p.num_pr=i.prd_num
+		<where>
+			<foreach item="num_pr" index="index" collection="map"
+				separator="OR"> p.num_pr=#{num_pr}
+			</foreach>
+		</where>
+	</select>
+
+	<select id="getImgFind">
+		select p.name, i.imgname from product p, img i where
+		p.num_pr = i.prd_num;
+	</select>
+
+	<!-- <select id="getimgname" resultType="com.pj.vo.ProductVO" parameterType="map"> 
+		SELECT * FROM product as p INNER JOIN img as i ON p.num_pr=i.prd_num WHERE 
+		p.num_pr= #{num_pr} <where> <foreach item="item" index="index" collection="list" 
+		open="AND p.num_pr IN(" separator="," close=")"> #{num_pr} </foreach> </where> 
+		</select> -->
+
+	<!-- <select id="getimgFind" resultType="map"> SELECT name, group_concat(i.imgname 
+		separator '|') imgimg FROM product AS p LEFT OUTER JOIN img i ON p.num_pr=i.prd_num 
+		GROUP BY p.num_pr; </select> -->
+
+	<!-- <select id="cartList" resultType="map"> SELECT num_pr, name, price, 
+		description, date_da GROUP_CONCAT(i.prd_num SEPARATOR '|') nums, GROUP_CONCAT(i.imgname 
+		separator '|') fnames, GROUP_CONCAT(i.imgsize SEPARATOR '|') sizes FROM product 
+		AS p LEFT OUTER JOIN img i ON p.num_pr=i.prd_num GROUP BY p.num_pr </select> -->
+
+	<select id="getCartProd" resultType="com.pj.vo.ProductVO">
+		SELECT p.num_pr,
+		p.num_pr, p.name, p.price, i.imgname FROM product p INNER JOIN
+		img i
+		ON p.num_pr=i.prd_num
+		<where>
+			p.num_pr IN
+			<foreach collection="list" item="prod" index="index"
+				separator="," open="(" close=")"> #{prod.num_pr} </foreach>
+		</where>
+	</select>
+
+
+	<select id="shopChoice" resultType="com.pj.vo.ProductVO">
+		SELECT p.num_pr,
+		p.num_pr, p.name, p.price, i.imgname FROM product p INNER JOIN
+		img i
+		ON p.num_pr=i.prd_num
+		<where>
+			p.num_pr IN
+			<foreach collection="list" item="num" index="index"
+				separator="," open="(" close=")"> #{num} </foreach>
+		</where>
+	</select>
 
 </mapper>
