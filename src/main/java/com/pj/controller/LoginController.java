@@ -56,7 +56,10 @@ public class LoginController {
 
 //	홈페이지 메인
 	@GetMapping("/home") // localhost/bar/home
-	public String home() {
+	public String home(Model model) {
+		List<ProductVO> cart = new ArrayList<>();
+		model.addAttribute("cart", cart);
+
 		return "login/home";
 	}
 
@@ -557,11 +560,11 @@ public class LoginController {
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage,
 			@SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {
 		if (cart == null) {
-			//System.out.println("세션에 카트생성");
+			// System.out.println("세션에 카트생성");
 			cart = new ArrayList<>();
 			model.addAttribute("cart", cart);
 		}
-		
+
 		if (id == null) {
 			return "redirect:/bar/login";
 		} else {
@@ -730,15 +733,15 @@ public class LoginController {
 
 	@GetMapping("/cart/list")
 	public String showCart(Model model, @SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {
-		if(cart.size() == 0) {
-			//System.out.println("세션에 카트생성");
+		if (cart.size() == 0) {
+			// System.out.println("세션에 카트생성");
 //			cart = new ArrayList<>();
 			model.addAttribute("list", cart);
 			return "/cart/cartlist";
 		} else {
 			model.addAttribute("list", dao.getCartProd(cart));
 			model.addAttribute("total", svc.getTotalPrice(cart));
-			
+
 		}
 		return "/cart/cartlist";
 	}
@@ -751,17 +754,16 @@ public class LoginController {
 		map.put("ordered", ordered);
 		return map;
 	}
-	
+
 	@PostMapping("/cart/delete")
 	@ResponseBody
-	public Map<String,Boolean> cartDeleted(Model model,@RequestParam(value = "chbox[]") int[] nums,
-			@SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {	
+	public Map<String, Boolean> cartDeleted(Model model, @RequestParam(value = "chbox[]") int[] nums,
+			@SessionAttribute(value = "cart", required = false) List<ProductVO> cart) {
 		System.out.println(nums.length + "c" + cart.size());
-		Map<String,Boolean> map = new HashMap<>();
+		Map<String, Boolean> map = new HashMap<>();
 		boolean deleted = svc.cartDeleted(cart, nums);
-		map.put("deleted",deleted);
+		map.put("deleted", deleted);
 		return map;
 	}
-
 
 }

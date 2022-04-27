@@ -27,8 +27,9 @@
 }
 
 .btn-holder {
-	float: right;
 	width: 53%;
+	width: fit-content;
+	margin-left: 67%;
 }
 
 a {

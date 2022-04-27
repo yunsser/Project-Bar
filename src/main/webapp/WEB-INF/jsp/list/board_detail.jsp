@@ -162,10 +162,8 @@
 								<fmt:formatNumber var="kilo" value="${f.filesize/1024}"
 									maxFractionDigits="0" />
 								<div>
-									<span class="form-control"> <a
-										href="/bar/file/download/${f.att_num}">${f.filename}</a>
-										[${kilo}kb] <img src="/upload/${f.filename}" width="70px"
-										height="100px" alt="" class="thumb" />
+									<span class="form-control">
+									<a href="/bar/file/download/${f.att_num}"><img src="/upload/${f.filename}" width="30%" alt="" class="thumb" style="display: block; margin: auto;"/></a>
 									</span>
 								</div>
 							</c:forEach>

@@ -130,7 +130,8 @@
 				style="width: 70%; text-align: center; margin: auto;">
 				<thead>
 					<tr>
-						<th><input type="checkbox" id="checkAll" name="checkAll" class="checkAll"></th>
+						<th><input type="checkbox" id="checkAll" name="checkAll"
+							class="checkAll"></th>
 						<th></th>
 						<th>PRODUCT</th>
 						<th>CONT</th>
@@ -142,8 +143,9 @@
 						<tr>
 							<th><input type="checkbox" class="cartCheck"
 								name="cartCheck" id="cartCheck" data-num="${p.num_pr}"></th>
-							
-							<td><img src="/upload/${p.imgname}" alt="사진" style="width: 75px;"></td>
+
+							<td><img src="/upload/${p.imgname}" alt="사진"
+								style="width: 75px;"></td>
 							<td>${p.name}</td>
 							<td>${p.qty}</td>
 							<td>${p.price}</td>
@@ -160,12 +162,12 @@
 	<!-- 총액 -->
 
 	<p>
-	<div class="btn-holder" style="width: 20%;">
+	<div class="btn-holder">
 		<c:if test="${id!='master'}">
-		<button class="btn btn-1 hover-filled-slide-right" type="button"
-			onclick="goPay" style="display: inline-block;">
-			<span>결제</span>
-		</button>
+			<button class="btn btn-1 hover-filled-slide-right" type="button"
+				onclick="goPay" style="display: inline-block;">
+				<span>결제</span>
+			</button>
 		</c:if>
 		<button class="btn btn-1 hover-filled-slide-right" type="button"
 			id="delete" style="display: inline-block;">
@@ -176,9 +178,9 @@
 	<p>
 
 		<!-- 하단베너 -->
-	<p class="text-center text-muted"
+		<div class="text-center text-muted"
 		style="border-top: 1px solid #dee2e6; padding-top: 10px;">© 2022
-		Yun Company, Inc</p>
+		Yun Company, Inc</div>
 
 
 	<script src="/js/cart/cartlist.js"></script>
@@ -188,6 +190,6 @@
 		crossorigin="anonymous">
 		
 	</script>
-	<!-- 하단베너 -->
+
 </body>
 </html>

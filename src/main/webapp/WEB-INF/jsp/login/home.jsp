@@ -144,10 +144,7 @@
 
 
 	<!-- main home -->
-	<div class="container">
-		<div class="row">
 			<!-- carousel 시작 -->
-
 			<div class="slidebox">
 				<input type="radio" name="slide" id="slide01" checked> <input
 					type="radio" name="slide" id="slide02">
@@ -162,22 +159,7 @@
 					</a></li>
 				</ul>
 			</div>
-
-
 			<!-- carousel 끝 -->
-		</div>
-
-		<div class="row"></div>
-
-
-
-		<div class="row">
-			<div class="col-sm-12"></div>
-
-		</div>
-
-
-	</div>
 
 	<!-- main home -->
 	<p>
