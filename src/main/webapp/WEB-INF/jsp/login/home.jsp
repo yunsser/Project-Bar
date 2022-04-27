@@ -12,6 +12,14 @@
 <!-- 탭로고 -->
 <link rel="shortcut icon" type="image/x-icon"
 	href="/images/home/homelog.png">
+<!-- 다중슬라이드 -->
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+	src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,11 +55,34 @@
 		var url = "/bar/master/main"
 		location.href = url;
 	}
+
+	$(document).ready(function() {
+		$('.slider').slick({
+			autoplay : true,
+			autoplaySpeed : 1000,
+			slidesToShow : 5,
+			slidesToScroll : 1,
+			responsive : [ {
+				breakpoint : 768,
+				settings : {
+					slidesToShow : 3,
+					arrows : false,
+				}
+			}, {
+				breakpoint : 600,
+				settings : {
+					slidesToShow : 1,
+					arrows : false,
+				}
+			} ]
+		});
+	});
 </script>
+
 </head>
 <body>
 
-<!-- 헤더 -->
+	<!-- 헤더 -->
 	<header class="p-3 bg-white text-dark">
 		<div class="container">
 			<div
@@ -63,7 +94,8 @@
 
 				<ul
 					class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-					<li><a href="/bar/notice/noticelist" class="nav-link px-2 text-dark">공지사항</a></li>
+					<li><a href="/bar/notice/noticelist"
+						class="nav-link px-2 text-dark">공지사항</a></li>
 					<!-- <li><a href="#" class="nav-link px-2 text-dark">제품</a></li> -->
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#"
@@ -76,7 +108,7 @@
 							<li><a class="dropdown-item" href="/bar/master/list">악세서리</a></li> -->
 						</ul></li>
 					<li><a href="/bar/list" class="nav-link px-2 text-dark">후기</a></li>
-<!-- 					<li><a href="#" class="nav-link px-2 text-dark">Q&A</a></li> -->
+					<!-- 					<li><a href="#" class="nav-link px-2 text-dark">Q&A</a></li> -->
 					<c:if test="${id == 'master'}">
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#"
@@ -121,7 +153,7 @@
 						<span id="login_log"
 							style="border-bottom: 1px solid white; padding-bottom: 1px; color: gray; position: relative; top: 5px; right: 6px;">
 							${id}님 </span>
-							<a class="paymentlist" href="/bar/cart/list">Cart</a>
+						<a class="paymentlist" href="/bar/cart/list">Cart</a>
 					</c:if>
 					<button type="button" class="btn btn-outline-light me-2"
 						style="color: white; background-color: black; border-color: white;"
@@ -140,26 +172,57 @@
 		<p class="text-center text-muted"
 			style="border-top: 1px solid #dee2e6;"></p>
 	</header>
-<!-- 헤더 -->
-
+	<!-- 헤더 -->
 
 	<!-- main home -->
-			<!-- carousel 시작 -->
-			<div class="slidebox">
-				<input type="radio" name="slide" id="slide01" checked> <input
-					type="radio" name="slide" id="slide02">
-				<ul class="slidelist">
-					<li class="slideitem"><a> <label for="slide02"
-							class="prev"></label> <img src="/images/home/pet2.png"
-							onclick="k_cat();"> <label for="slide02" class="next"></label>
-					</a></li>
-					<li class="slideitem"><a> <label for="slide01"
-							class="prev"></label> <img src="/images/home/jojo2.png"
-							onclick="zuzuzu();"> <label for="slide01" class="next"></label>
-					</a></li>
-				</ul>
+
+	<!-- carousel 시작 -->
+	<div class="slidebox">
+		<input type="radio" name="slide" id="slide01" checked> <input
+			type="radio" name="slide" id="slide02">
+		<ul class="slidelist">
+			<li class="slideitem"><a> <label for="slide02" class="prev"></label>
+					<img src="/images/home/pet2.png" onclick="k_cat();"> <label
+					for="slide02" class="next"></label>
+			</a></li>
+			<li class="slideitem"><a> <label for="slide01" class="prev"></label>
+					<img src="/images/home/jojo2.png" onclick="zuzuzu();"> <label
+					for="slide01" class="next"></label>
+			</a></li>
+		</ul>
+	</div>
+	<!-- carousel 끝 -->
+
+	<%-- 	<div id="flex">
+		<div class="item">
+			<c:forEach var="c" items="${list2}" varStatus="status">
+				<a href="/bar/shop/detail?num=${c.prd_num}"><img alt="사진"
+					src="/upload/${c.imgname}"
+					style="width: 154px; height: 158px; margin-left: 5px;"></a>
+				<div>${list[status.index].name}</div>
+			</c:forEach>
+		</div>
+	</div> --%>
+	<!-- carousel 시작 -->
+
+	<div class="eight">
+		<h1>product</h1>
+	</div>
+
+	<!-- <div>
+		<a href="/bar/shop/list"><img src="/images/login/je.png" alt="사진"
+			style="width: 15%; margin: auto; display: block;"></a>
+	</div> -->
+
+	<div class="slider">
+		<c:forEach var="c" items="${list2}" varStatus="status">
+			<div>
+				<a href="/bar/shop/detail?num=${c.prd_num}"><img
+					src="/upload/${c.imgname}" alt=""></a>
 			</div>
-			<!-- carousel 끝 -->
+		</c:forEach>
+	</div>
+	<!-- carousel 끝 -->
 
 	<!-- main home -->
 	<p>
@@ -171,6 +234,7 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
+
 </body>
 </html>
 

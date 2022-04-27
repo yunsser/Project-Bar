@@ -59,6 +59,11 @@ public class LoginController {
 	public String home(Model model) {
 		List<ProductVO> cart = new ArrayList<>();
 		model.addAttribute("cart", cart);
+		
+		List<Map<String, String>> list = dao.getShop();
+		List<Map<String, String>> list2 = dao.getImg();
+		model.addAttribute("list", list);
+		model.addAttribute("list2", list2);
 
 		return "login/home";
 	}
