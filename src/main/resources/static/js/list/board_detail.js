@@ -187,3 +187,5 @@ function commentDelete(cno){
 $(document).ready(function(){
     commentList(); //페이지 로딩시 댓글 목록 출력 
 });
+
+

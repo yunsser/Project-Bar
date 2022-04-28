@@ -300,7 +300,7 @@ public class LoginController {
 	@ResponseBody
 	public Map<String, Boolean> updateBoard(
 			@SessionAttribute(name = "id", required = false) @RequestParam(name = "files", required = false) MultipartFile[] mfiles,
-			HttpServletRequest request, BoardVO board, @RequestParam("delfiles") List<String> delfiles, Model model) {
+			HttpServletRequest request, BoardVO board, @RequestParam(name ="delfiles", required = false) List<String> delfiles, Model model) {
 		// System.out.println("삭제할파일수" + delfiles.size());
 		Map<String, Boolean> map = new HashMap<>();
 		boolean boardUpdated = svc.boardUpdated(request, board, mfiles, delfiles);
@@ -371,6 +371,7 @@ public class LoginController {
 		return dao.commentDeleteService(cno);
 	}
 
+	
 //	==========================================================================================================================
 
 	@GetMapping("/master/list")

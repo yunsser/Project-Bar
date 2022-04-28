@@ -29,11 +29,7 @@
 <link rel="stylesheet" href="/css/list/board_detail.css">
 
 <title>게시글수정</title>
-<!-- <script>
-	$(function(){
-		alert('제이쿼리 시좍');
-	});
-</script> -->
+
 
 </head>
 
@@ -172,7 +168,7 @@
 										<span class="form-control"> <a
 											href="/bar/file/download/${f.att_num}">${f.filename}</a>
 											[${kilo}kb] <img src="/upload/${f.filename}" width="100px"
-											height="100px" alt="" class="thumb" /> <%-- 	<a class="link_del" href="javascript:del_file(${f.att_num});">삭제</a></span> --%>
+											height="100px" alt="" class="thumb" /> 
 											<a class="link_del" href="javascript:del_file(${f.att_num});">삭제</a></span>
 									</div>
 								</c:forEach>

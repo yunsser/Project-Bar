@@ -6,7 +6,6 @@ function del_board(num) {
 
 	var obj = {};
 	obj.num = num;
-	/* alert(obj.uid); */
 
 	$.ajax({
 		url: '/bar/file/delete',
@@ -34,7 +33,7 @@ function del_file(fnum) {
 
 function updateBoard() {
 
-	//alert('del'+del_files)
+	//alert('del'+del_file);
 	if (!confirm('정말로 저장하시겠습니까?')) {
 		alert('정상적으로 취소했습니다.');
 		return false;

@@ -146,8 +146,6 @@ public interface LoginMapper {
 
 	List<ProductVO> shopChoice(int[] list);
 
-
-	
 //	================================================== 
 	
 	

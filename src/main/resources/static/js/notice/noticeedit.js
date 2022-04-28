@@ -15,7 +15,7 @@ function del_board(num) {
 		data: obj,
 		dataType: 'json',
 		success: function(res) {
-			alert(res.boardDeleted ? '삭제 성공' : '삭제 실패!');
+			alert(res.noticeDeleted ? '삭제 성공' : '삭제 실패!');
 			location.reload();
 		},
 		error: function(xhr, status, err) {

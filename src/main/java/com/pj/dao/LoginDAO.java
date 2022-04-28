@@ -144,6 +144,8 @@ public class LoginDAO {
         return loginMapper.commentDelete(cno);
     }
     
+    
+    
 //	===========================================================================================
 
 	public int countNotice() {

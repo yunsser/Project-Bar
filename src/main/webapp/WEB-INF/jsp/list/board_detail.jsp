@@ -105,7 +105,7 @@
 						<span id="login_log"
 							style="border-bottom: 1px solid white; padding-bottom: 1px; color: gray; position: relative; top: 5px; right: 6px;">
 							${id}님 </span>
-							<a class="paymentlist" href="/bar/cart/list">Cart</a>
+						<a class="paymentlist" href="/bar/cart/list">Cart</a>
 					</c:if>
 					<button type="button" class="btn btn-outline-light me-2"
 						style="color: white; background-color: black; border-color: white;"
@@ -162,8 +162,10 @@
 								<fmt:formatNumber var="kilo" value="${f.filesize/1024}"
 									maxFractionDigits="0" />
 								<div>
-									<span class="form-control">
-									<a href="/bar/file/download/${f.att_num}"><img src="/upload/${f.filename}" width="30%" alt="" class="thumb" style="display: block; margin: auto;"/></a>
+									<span class="form-control"> <a
+										href="/bar/file/download/${f.att_num}"><img
+											src="/upload/${f.filename}" width="30%" alt="" class="thumb"
+											style="display: block; margin: auto;" /></a>
 									</span>
 								</div>
 							</c:forEach>
@@ -215,9 +217,6 @@
 			</div>
 		</div>
 	</div>
-
-
-
 
 
 	<!-- 글쓰기 -->

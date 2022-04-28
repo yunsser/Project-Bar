@@ -191,7 +191,7 @@ public class LoginSVC {
 
 	public boolean boardUpdated(HttpServletRequest request, BoardVO board, MultipartFile[] mfiles,
 			List<String> delfiles) {
-//		boolean deleteFileInfo = deleteFileInfo(delfiles);
+		boolean deleteFileInfo = deleteFileInfo(delfiles);
 		// System.out.println(deleteFileInfo);
 
 		boolean saved = boardUpdate(board); // 글 저장
@@ -336,6 +336,8 @@ public class LoginSVC {
 
 	public boolean noticeUpdated(HttpServletRequest request, NoticeVO notice, MultipartFile[] mfiles,
 			List<String> delfiles) {
+		boolean noticedeleteFileInfo = noticedeleteFileInfo(delfiles);
+		
 		boolean saved = noticeUpdated(notice); // 글 저장
 		int notice_num = notice.getNum_no(); // 글 저장시 자동증가 필드
 		if (!saved) {
@@ -587,6 +589,12 @@ public class LoginSVC {
 		}
 		return true;
 	}
+	
+//	========================================================================================================================
+
+	
+	
+	
 
 //	public List<ProductVO> cartList() {
 //		List<Map<String, Object>> list = dao.cartList();

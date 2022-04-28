@@ -50,14 +50,14 @@ $("#delete").click(function() {
 		//alert('번호'+checkArr);
 
 		$.ajax({
-			url: 'bar/master/userDelete',
+			url: '/bar/master/userDelete',
 			type: 'post',
 			data: { chbox: checkArr },
 			dataType: 'json',
 			success: function(res) {
 				//alert('res'+res.userDelete);
 				alert('삭제되었습니다');
-				location.href = "/bar/cart/list";
+				location.href = "/bar/master/list";
 
 
 
